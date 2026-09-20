@@ -10,7 +10,7 @@ from chess_engine import san as chess_san
 
 VERSION = 'cmp1'
 PROTOCOL_VERSION = VERSION
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 UCI_RE = re.compile(r'^[a-h][1-8][a-h][1-8][qrbn]?$')
 
