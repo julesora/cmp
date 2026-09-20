@@ -4,6 +4,16 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to publish'
+        required: true
+        default: 'v0.1.0'
+        type: string
+
+env:
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
 
 permissions:
   contents: read
@@ -14,13 +24,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
 
+      - name: Check tag
+        run: |
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $RELEASE_TAG"
+            exit 1
+          fi
+
       - name: Check version
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
+          TAG="${RELEASE_TAG#v}"
           PACKAGE_VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
           MODULE_VERSION=$(python -c "import cmp; print(cmp.__version__)")
           test "$TAG" = "$PACKAGE_VERSION"
@@ -36,7 +56,7 @@ jobs:
           python -m twine check dist/*
 
       - name: Upload package
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
@@ -49,7 +69,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist
@@ -58,10 +78,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --clobber
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" dist/* --repo "$GITHUB_REPOSITORY" --clobber
           else
-            gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes
+            gh release create "$RELEASE_TAG" dist/* --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes
           fi
 
   pypi:
@@ -74,7 +94,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist
