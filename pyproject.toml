@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmp-mnemonic"
+version = "0.1.0"
+description = "Chess Mnemonic Protocol tools"
+readme = {file = "README", content-type = "text/markdown"}
+requires-python = ">=3.8"
+dependencies = []
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+[project.urls]
+Repository = "https://github.com/julesora/cmp"
+Specification = "https://github.com/julesora/cmp/blob/main/spec/cmp-0001.md"
+
+[project.scripts]
+cmp = "cmp:main"
+
+[tool.setuptools]
+py-modules = ["cmp", "chess_engine"]

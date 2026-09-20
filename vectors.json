@@ -1,0 +1,64 @@
+{
+  "format": "cmp-vectors-1",
+  "protocol": "cmp1",
+  "valid": [
+    {
+      "name": "opening",
+      "input": "CMP1   E2E4  E7E5   G1F3 B8C6 F1B5",
+      "canonical": "cmp1 e2e4 e7e5 g1f3 b8c6 f1b5",
+      "uci": "e2e4 e7e5 g1f3 b8c6 f1b5",
+      "san": "1. e4 e5 2. Nf3 Nc6 3. Bb5"
+    },
+    {
+      "name": "castling",
+      "input": "cmp1 e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1",
+      "canonical": "cmp1 e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1",
+      "uci": "e2e4 e7e5 g1f3 b8c6 f1b5 a7a6 b5a4 g8f6 e1g1",
+      "san": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O"
+    },
+    {
+      "name": "en-passant",
+      "input": "cmp1 e2e4 a7a6 e4e5 d7d5 e5d6",
+      "canonical": "cmp1 e2e4 a7a6 e4e5 d7d5 e5d6",
+      "uci": "e2e4 a7a6 e4e5 d7d5 e5d6",
+      "san": "1. e4 a6 2. e5 d5 3. exd6"
+    },
+    {
+      "name": "promotion",
+      "input": "cmp1 a2a4 h7h5 a4a5 h5h4 a5a6 h4h3 a6b7 h3g2 b7a8q",
+      "canonical": "cmp1 a2a4 h7h5 a4a5 h5h4 a5a6 h4h3 a6b7 h3g2 b7a8q",
+      "uci": "a2a4 h7h5 a4a5 h5h4 a5a6 h4h3 a6b7 h3g2 b7a8q",
+      "san": "1. a4 h5 2. a5 h4 3. a6 h3 4. axb7 hxg2 5. bxa8=Q"
+    },
+    {
+      "name": "checkmate",
+      "input": "cmp1 e2e4 e7e5 d1h5 b8c6 f1c4 g8f6 h5f7",
+      "canonical": "cmp1 e2e4 e7e5 d1h5 b8c6 f1c4 g8f6 h5f7",
+      "uci": "e2e4 e7e5 d1h5 b8c6 f1c4 g8f6 h5f7",
+      "san": "1. e4 e5 2. Qh5 Nc6 3. Bc4 Nf6 4. Qxf7#",
+      "pgn_result": "1-0"
+    }
+  ],
+  "invalid": [
+    {
+      "name": "missing-version",
+      "input": "e2e4 e7e5"
+    },
+    {
+      "name": "missing-moves",
+      "input": "cmp1"
+    },
+    {
+      "name": "malformed-square",
+      "input": "cmp1 e2e9"
+    },
+    {
+      "name": "illegal-move",
+      "input": "cmp1 e2e5"
+    },
+    {
+      "name": "wrong-side-to-move",
+      "input": "cmp1 e2e4 d2d4"
+    }
+  ]
+}
