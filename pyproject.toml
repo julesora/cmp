@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "chess-mnemonic-protocol"
-version = "0.1.2"
+version = "0.1.3"
 description = "Chess Mnemonic Protocol tools"
 readme = {file = "README", content-type = "text/markdown"}
 requires-python = ">=3.8"
@@ -15,6 +15,7 @@ classifiers = [
 ]
 
 [project.urls]
+"Example Website" = "https://github.com/julesora/cmp-website.git"
 Repository = "https://github.com/julesora/cmp"
 Specification = "https://github.com/julesora/cmp/blob/main/spec/cmp-0001.md"
 

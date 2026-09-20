@@ -1,6 +1,12 @@
 Changes
 =======
 
+0.1.3
+-----
+
+* Link the example website repository in the README and package metadata
+* Update the manual release tag default and PyPI project URL
+
 0.1.2
 -----
 

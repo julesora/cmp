@@ -4,6 +4,11 @@ Chess Mnemonic Protocol
 Chess Mnemonic Protocol (CMP) is a small text format for legal chess move
 sequences.
 
+Example Website
+---------------
+
+See the [example website repository](https://github.com/julesora/cmp-website.git).
+
 Install
 -------
 
