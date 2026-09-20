@@ -1,73 +1,51 @@
-CMP
-===
+Chess Mnemonic Protocol
+=======================
 
-CMP is a small text format for legal chess move sequences.
-CMP 1 stores moves in lowercase UCI.
+Chess Mnemonic Protocol (CMP) is a small text format for legal chess move
+sequences.
+
+Install
+-------
+
+    python -m pip install chess-mnemonic-protocol
 
 Quick Start
 -----------
 
-* Check a value: cmp check cmp1 e2e4 e7e5
-* Normalize a value: cmp normalize CMP1 E2E4 E7E5
-* Convert to SAN: cmp convert --to san cmp1 e2e4 e7e5
-* Convert to PGN: cmp convert --to pgn cmp1 e2e4 e7e5
-* List legal moves: cmp legal e2e4 e7e5
+Check a mnemonic:
 
-Install for development:
+    cmp check cmp1 e2e4 e7e5
 
-    python -m pip install -e .
+Convert to SAN:
+
+    cmp convert --to san cmp1 e2e4 e7e5 g1f3
+
+Convert to PGN:
+
+    cmp convert --to pgn cmp1 e2e4 e7e5 g1f3
+
+Python
+------
+
+    import cmp
+
+    value = 'cmp1 e2e4 e7e5 g1f3'
+
+    cmp.check(value)
+    cmp.normalize(value)
+    cmp.convert_mnemonic(value, 'san')
 
 Format
 ------
 
-A CMP 1 value starts with cmp1 followed by legal UCI moves:
+CMP 1 starts with `cmp1` followed by legal moves in UCI notation.
 
-    cmp1 e2e4 e7e5 g1f3 b8c6
-
-The main rules are:
-
-* moves are lowercase UCI
-* moves must be legal
-* legal move lists are sorted
-* a finished game resets to the start position
-
-See spec/cmp-0001.md for the full format.
-
-Python API
-----------
-
-    import cmp
-
-    line = 'cmp1 e2e4 e7e5 g1f3'
-
-    cmp.check(line)
-    cmp.normalize(line)
-    cmp.parse_mnemonic(line)
-    cmp.legal_moves()
-    cmp.convert_mnemonic(line, 'san')
-    cmp.convert_mnemonic(line, 'pgn')
-
-CMP text always uses UCI. SAN and PGN are output formats.
+    cmp1 e2e4 e7e5 g1f3
 
 Documentation
 -------------
 
-* Format: spec/cmp-0001.md
+* Format rules: spec/cmp-0001.md
 * Test vectors: vectors.json
-* Changes: CHANGELOG.md
 * Contributing: CONTRIBUTING.md
 * Security: SECURITY.md
-
-Source
-------
-
-* cmp.py: parser, API and command line
-* chess_engine.py: chess rules
-* tests/test_cmp.py: tests
-
-Development
------------
-
-Run the tests with:
-
-    python -m unittest discover -s tests -v
